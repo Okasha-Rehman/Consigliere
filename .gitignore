@@ -1,0 +1,168 @@
+# ========== ENVIRONMENT & SECRETS ==========
+# NEVER commit environment files with secrets
+.env
+.env.local
+.env.*.local
+.env.dev
+.env.prod
+.env.staging
+.env.test
+.env.example.local
+.env-cmdrc.json
+
+# ========== PYTHON ==========
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+*.mo
+*.pot
+.Python
+pyvenv.cfg
+venv/
+ENV/
+env/
+.venv
+env.bak/
+venv.bak/
+
+# ========== NODE / FRONTEND ==========
+node_modules/
+frontend/dist/
+frontend/.cache/
+frontend/build/
+.npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnp
+.pnp.js
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ========== IDE & EDITORS ==========
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+.vim/
+.vimrc
+
+# ========== OS-SPECIFIC ==========
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*Zone.Identifier
+:Zone.Identifier
+
+# ========== BUILD & RUNTIME ARTIFACTS ==========
+backend/uploads/
+backend/.pytest_cache/
+backend/migrations/
+frontend/.next/
+
+# ========== DOCKER & CONTAINER ==========
+docker-compose.override.yml
+.dockerignore.local
+.docker/config.json
+
+# ========== LOGS ==========
+*.log
+logs/
+log/
+
+# ========== CREDENTIALS & SENSITIVE ==========
+*.pem
+*.key
+*.pub
+*.gpg
+.aws/
+.gcloud/
+.kube/
+kubeconfig
+kubeconfig.yml
+
+# ========== TEMP FILES ==========
+*.tmp
+*.temp
+*.bak
+*~
+.#*
+\#*\#
+*.orig
+
+# ========== DATABASE ==========
+*.sqlite
+*.sqlite3
+*.db
+database.db
+postgres_data/
+
+# ========== VENV & PACKAGE MANAGERS ==========
+.venv/
+.env/
+env/
+ENV/
+pipenv/
+poetry.lock
+Pipfile.lock
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+*.log
+
+# Build
+build/
+dist/
+
+# Uploads
+uploads/
+
+monitoring/

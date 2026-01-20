@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background-color: #0a0a0a;
+  color: #d4c5a9;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg,
+      rgba(10, 10, 10, 0.95) 0%,
+      rgba(20, 20, 30, 0.9) 25%,
+      rgba(15, 15, 25, 0.95) 50%,
+      rgba(25, 25, 35, 0.9) 75%,
+      rgba(10, 10, 10, 0.95) 100%);
+  background-size: 400% 400%;
+  animation: cityscapeShift 25s ease-in-out infinite, twinkle 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes cityscapeShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Add city skyline silhouette */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to top,
+    rgba(10, 10, 10, 0.9) 0%,
+    rgba(10, 10, 10, 0.7) 30%,
+    rgba(10, 10, 10, 0.5) 60%,
+    transparent 100%);
+  clip-path: polygon(
+    0% 100%, 5% 80%, 10% 85%, 15% 70%, 20% 75%, 25% 60%, 30% 80%, 35% 65%, 40% 85%, 45% 70%,
+    50% 90%, 55% 75%, 60% 80%, 65% 55%, 70% 75%, 75% 60%, 80% 85%, 85% 70%, 90% 80%, 95% 65%, 100% 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: skylineGlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes skylineGlow {
+  0% {
+    filter: brightness(0.8) contrast(1.1);
+  }
+  100% {
+    filter: brightness(1.2) contrast(1.3);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-consigliere-gold text-consigliere-black px-8 py-3 font-sans font-semibold tracking-wider 
+           uppercase transition-all duration-300 hover:bg-consigliere-gold-dark hover:shadow-lg 
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-consigliere-gold text-consigliere-gold px-8 py-3 
+           font-sans font-semibold tracking-wider uppercase transition-all duration-300 
+           hover:bg-consigliere-gold hover:text-consigliere-black disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full bg-consigliere-charcoal border border-consigliere-border text-consigliere-gold 
+           px-4 py-3 focus:outline-none focus:border-consigliere-gold transition-colors duration-300
+           placeholder-consigliere-text-muted;
+  }
+
+  .card {
+    @apply bg-consigliere-charcoal border border-consigliere-border p-8;
+  }
+
+  .stat-card {
+    @apply bg-consigliere-dark-gray border border-consigliere-border p-6 text-center;
+  }
+}
+
+.heading-1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+.heading-2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1.3;
+}
+
+.heading-3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.body-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+.markdown-content {
+  @apply text-consigliere-gold;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  @apply font-serif text-consigliere-gold mb-4 mt-6;
+}
+
+.markdown-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply ml-6 mb-4;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content code {
+  @apply bg-consigliere-dark-gray px-2 py-1 rounded text-sm;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-consigliere-gold pl-4 italic my-4;
+}
+
+.spinner {
+  border: 3px solid #3a3a3a;
+  border-top: 3px solid #d4c5a9;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.streak-flame {
+  filter: drop-shadow(0 0 20px rgba(212, 197, 169, 0.5));
+  animation: flicker 3s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(212, 197, 169, 0.5));
+  }
+  50% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 30px rgba(212, 197, 169, 0.7));
+  }
+}
+
+.page-enter {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #3a3a3a, transparent);
+  margin: 3rem 0;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #d4c5a9;
+}
+
+.profile-picture-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d4c5a9;
+}
