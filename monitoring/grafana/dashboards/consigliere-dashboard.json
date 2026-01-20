@@ -1,0 +1,141 @@
+{
+  "id": null,
+  "title": "Consigliere Application Metrics",
+  "tags": ["consigliere", "python", "fastapi"],
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "HTTP Request Rate",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total[5m])",
+          "legendFormat": "{{method}} {{endpoint}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": 2,
+      "title": "HTTP Request Duration",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "95th percentile",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "50th percentile",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
+    },
+    {
+      "id": 3,
+      "title": "HTTP Status Codes",
+      "type": "table",
+      "targets": [
+        {
+          "expr": "sum(increase(http_requests_total[5m])) by (status_code, endpoint)",
+          "legendFormat": "{{status_code}} {{endpoint}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "id": 4,
+      "title": "Error Rate",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{status_code=~\"5..\"}[5m]) / rate(http_requests_total[5m]) * 100",
+          "legendFormat": "5xx Error Rate %",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      }
+    },
+    {
+      "id": 5,
+      "title": "Daily Check-ins",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "consigliere_daily_checkins_total",
+          "legendFormat": "Daily Check-ins",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      }
+    },
+    {
+      "id": 6,
+      "title": "System Metrics",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "process_virtual_memory_bytes / 1024 / 1024",
+          "legendFormat": "Memory Usage (MB)",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(process_cpu_user_seconds_total[5m]) * 100",
+          "legendFormat": "CPU Usage %",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": "5s",
+  "schemaVersion": 16,
+  "version": 0,
+  "links": []
+}
