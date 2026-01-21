@@ -108,6 +108,8 @@ VITE_API_BASE_URL=http://localhost:8000
 
 ---
 
+Jenkins CICD Automated Test#1.
+
 ## License
 
 MIT
