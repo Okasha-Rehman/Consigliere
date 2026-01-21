@@ -1,0 +1,71 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: consigliere-alerts
+  namespace: monitoring
+  labels:
+    prometheus: kube-prometheus
+spec:
+  groups:
+    - name: consigliere.rules
+      interval: 30s
+      rules:
+        # Alert: High error rate
+        - alert: HighErrorRate
+          expr: |
+            (sum(rate(http_requests_total{job="consigliere/backend",status=~"5.."}[5m])) by (job))
+            /
+            (sum(rate(http_requests_total{job="consigliere/backend"}[5m])) by (job))
+            > 0.05
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High error rate detected ({{ $value | humanizePercentage }})"
+            description: "Backend has error rate > 5% for 5 minutes"
+        
+        # Alert: High latency
+        - alert: HighLatency
+          expr: |
+            histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="consigliere/backend"}[5m])) > 1
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High latency detected ({{ $value }}s)"
+            description: "Backend P95 latency > 1 second for 5 minutes"
+        
+        # Alert: Database connection exhaustion
+        - alert: DatabaseConnectionHigh
+          expr: |
+            db_connections_active{job="consigliere/backend"} > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Database connections {{ $value }}/100"
+            description: "Backend approaching database connection limit"
+        
+        # Alert: Pod restart loop
+        - alert: PodCrashLooping
+          expr: |
+            rate(kube_pod_container_status_restarts_total{namespace="consigliere"}[15m]) > 0.1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod {{ $labels.pod }} restarting frequently"
+            description: "Pod has restarted multiple times in 15 minutes"
+        
+        # Alert: High memory usage
+        - alert: HighMemoryUsage
+          expr: |
+            (container_memory_usage_bytes{pod=~"backend.*", namespace="consigliere"} 
+            / 
+            container_spec_memory_limit_bytes{pod=~"backend.*", namespace="consigliere"}) > 0.9
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage {{ $value | humanizePercentage }}"
+            description: "Pod {{ $labels.pod }} memory usage > 90%"

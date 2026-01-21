@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: consigliere
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  
+  selector:
+    matchLabels:
+      app: frontend
+  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      
+      containers:
+        - name: frontend
+          image: 983753078983.dkr.ecr.us-east-1.amazonaws.com/consigliere/frontend:latest
+          imagePullPolicy: Always
+          
+          env:
+            - name: ENV
+              value: "production"
+            - name: API_BASE_URL
+              value: "backend-service.consigliere.svc.cluster.local:8000"
+          
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+              memory: 512Mi
+          
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+          
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 3
